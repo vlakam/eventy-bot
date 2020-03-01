@@ -18,7 +18,7 @@ bot.use(async (ctx, next) => {
     } catch (e) {
         console.log(e);
     }
-})
+});
 
 const generateTextForMeeting = (meeting) => {
     const text = [
@@ -56,11 +56,12 @@ bot.action(/(exit|entry) (.*)/, async (ctx) => {
     const { from:user } = ctx.update.callback_query;
     let participant = await ParticipantModel.findOne({ tgId: user.id });
     if (!participant) {
-        participant = await ParticipantModel.create({ tgId: user.id, displayName: user.first_name })
+        participant = await ParticipantModel.create({ tgId: user.id, displayName: user.first_name });
         await participant.save();
     }
 
     const meeting = await MeetingModel.findById({ _id: meetingId});
+    await meeting.populate('participants').execPopulate();
     if (!meeting) { return }
     if (action === 'entry') {
         if (meeting.participants.some((participant) => participant.tgId === user.id)) {
@@ -87,7 +88,7 @@ bot.action(/(exit|entry) (.*)/, async (ctx) => {
 });
 
 const init = async () => {
-    const mongoose = await connect(process.env.DB, {
+    await connect(process.env.DB, {
         useNewUrlParser: true,
         useUnifiedTopology: true
     });

@@ -1,10 +1,10 @@
-import {prop, arrayProp, getModelForClass} from "@typegoose/typegoose";
+import {prop, arrayProp, getModelForClass, Ref} from "@typegoose/typegoose";
 import {ObjectId} from "mongodb";
 
 export class Participant {
     readonly id: ObjectId;
 
-    @prop({ required: true, index: true, unique: true, sparse: true })
+    @prop({ required: true, index: true, unique: true })
     tgId: number;
 
     @prop({ required: true })
@@ -17,8 +17,8 @@ export class Meeting {
     @prop({ required: true })
     topic: string;
 
-    @arrayProp({items: Participant, default: undefined} )
-    participants?: Participant[];
+    @arrayProp({ref: 'Participant'} )
+    participants: Ref<Participant>[];
 }
 
 export const MeetingModel = getModelForClass(Meeting);
