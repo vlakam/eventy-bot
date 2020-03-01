@@ -4,7 +4,7 @@ import {ObjectId} from "mongodb";
 export class Participant {
     readonly id: ObjectId;
 
-    @prop({ required: true, index: true, unique: true })
+    @prop({ required: true, index: true, unique: true, sparse: true })
     tgId: number;
 
     @prop({ required: true })
