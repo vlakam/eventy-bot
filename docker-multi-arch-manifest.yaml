@@ -1,0 +1,11 @@
+image: vlakam/eventy-bot:latest
+manifests:
+  - image: vlakam/eventy-bot:amd64
+    platform:
+      architecture: amd64
+      os: linux
+  - image: vlakam/eventy-bot:arm64
+    platform:
+      architecture: arm64
+      os: linux
+      variant: v8

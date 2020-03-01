@@ -1,0 +1,36 @@
+version: '3.0'
+
+services:
+  node:
+    #    build:
+    #      context: .
+    image: vlakam/eventy-bot
+    env_file: .env
+    restart: always
+    depends_on:
+      - mongo
+    networks:
+      - database_nw
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  mongo:
+    restart: always
+    image: mongo:latest
+    volumes:
+      - mongo-volume:/data/db
+    #    ports:
+    #      - 27017:27017
+    networks:
+      - database_nw
+
+volumes:
+  mongo-volume:
+    driver: 'local'
+
+networks:
+  database_nw:
+    driver: bridge
