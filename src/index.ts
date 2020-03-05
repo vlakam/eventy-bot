@@ -22,7 +22,7 @@ bot.use(async (ctx, next) => {
 
 const generateTextForMeeting = (meeting) => {
     const text = [
-        `<b>${meeting.topic}</b>`,
+        `${meeting.topic}`,
         '',
         'Записались:',
         `${meeting.participants.map((participant, idx) => `${idx +1}. <a href="tg://user?id=${participant.tgId}">${participant.displayName}</a>`).join('\n')}`
