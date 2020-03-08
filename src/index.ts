@@ -54,7 +54,7 @@ const updateMeetingMessage = (ctx, meeting, isOwner = true, action = 'edit') => 
         )));
 };
 
-bot.hears(/^[!\/]init (.+)$/, async (ctx: ContextMessageUpdate) => {
+bot.hears(/^[!\/]init (.+)$/mg, async (ctx: ContextMessageUpdate) => {
     const topic = ctx.match[1];
     // @ts-ignore
     const formattedText = Markup.formatHTML(ctx.message.text, ctx.message.entities).slice(6);
